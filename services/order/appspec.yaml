@@ -1,0 +1,20 @@
+# services/order-api/appspec.yaml
+
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: <TASK_DEFINITION> # Replaced by CodePipeline at runtime
+        LoadBalancerInfo:
+          ContainerName: "order-api"
+          ContainerPort: 8000
+        PlatformVersion: "LATEST"
+        NetworkConfiguration:
+          AwsvpcConfiguration:
+            Subnets:
+              - <SUBNET_1> # Replaced by CodePipeline at runtime
+              - <SUBNET_2>
+            SecurityGroups:
+              - <SECURITY_GROUP>
+            AssignPublicIp: "DISABLED" # Private subnet = no public IP needed
